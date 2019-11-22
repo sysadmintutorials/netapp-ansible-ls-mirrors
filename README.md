@@ -15,16 +15,16 @@ Main variables used to create Root LS-Mirrors. Change these to suit your environ
 
 2. 01_create_ls_vols.yml<br>
 
-This playbook is responsible for create 2 DP volumes which will be used for the root LS-Mirror
+This playbook is responsible for create 2 DP volumes which will be used for the root LS-Mirror<br>
   
 3. 02_create_ls_mirror.yml<br>
  
 This playbook will create  2 x LS-Mirror relationships. During the creation, LS-Mirror 1 will initialize automatically.
-I then allow a 20 sec pause to finish the first initialization. After 20 seconds is up, the second LS-Mirror will initialize.
+I then allow a 20 sec pause to finish the first initialization. After 20 seconds is up, the second LS-Mirror will initialize.<br>
   
 4. svm_ls_mirror_setup.yml<br>
 
-  This is the main playbook file. It will run 01_create_ls_vols.yml and 02_create_ls_mirror.yml.
+  This is the main playbook file. It will run 01_create_ls_vols.yml and 02_create_ls_mirror.yml.<br>
   
 ## Running the Playbook
 
