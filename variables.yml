@@ -1,0 +1,30 @@
+##################################################
+# Variable File for 'netapp_ls-mirror_setup.yml' #
+##################################################
+
+# Cluster Login
+clusterip: 192.168.1.50
+user: ansible
+pass: Password123
+https_option: true
+validate_certs_option: false
+
+# Source Cluster Name
+sourcecluster: CLUSTER96
+
+# SVM Name
+vservername: SVM1
+
+# LS Mirror Source Vol Variable
+lsvolsrc: SVM1_root
+
+# LS Mirror Vol 1 Variable
+aggr1: aggr1_CLUSTER96_01_data
+lsvol1name: SVM1_root_m01
+lsvol1size: 1 # Size is in GB
+
+# LS Mirror Vol 2 Variable
+aggr2: aggr2_CLUSTER96_01_data
+lsvol2name: SVM1_root_m02
+lsvol2size: 1 # Size is in GB
+

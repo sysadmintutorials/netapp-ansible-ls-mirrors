@@ -1,0 +1,20 @@
+##########################################################
+# This Ansible Playbook calls multiple sub yml playbooks #
+##########################################################
+
+#########################################################################################################################################
+# -= Requirements =-
+#
+# 1. Make sure ansible user has been created
+# 1a. security login create -vserver CLUSTER96 -role admin -application http -authentication-method password -user-or-group-name ansible
+# 1b. security login create -vserver CLUSTER96 -role admin -application ontapi -authentication-method password -user-or-group-name ansible
+# 1c. security login create -vserver CLUSTER96 -role admin -application console -authentication-method password -user-or-group-name ansible
+##########################################################################################################################################
+
+---
+# Create 2 x 1GB DP Volumes
+- import_playbook: 01_create_ls_vols.yml
+
+# Create SVM LS Mirror
+- import_playbook: 02_create_ls_mirror.yml
+
