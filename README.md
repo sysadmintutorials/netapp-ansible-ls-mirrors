@@ -30,5 +30,5 @@ I then allow a 20 sec pause to finish the first initialization. After 20 seconds
 ansible-playbook svm_ls_mirror_setup.yml
 
 # Change Log
-22-11-2019: Initial Creation
+22-11-2019: Initial Creation<br>
 05-12-2019: Removed integrated user/pass. Script will now prompt for credentials. YAML files have now collapsed into 01_create_ls_mirror.yml and variables.yml
