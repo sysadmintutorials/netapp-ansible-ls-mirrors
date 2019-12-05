@@ -1,0 +1,59 @@
+---
+- hosts: localhost
+  name: Create LS Root Vols and LS-Mirror
+  gather_facts: false
+  vars_prompt:
+    - name: clusteruser
+      prompt: "Enter your {{ sourcecluster }} username ?"
+      private: no
+    - name: clusterpass
+      prompt: "Enter your {{ sourcecluster }} password ?"
+  vars:
+    login: &login
+     hostname: "{{ clusterip }}"
+     username: "{{ clusteruser }}"
+     password: "{{ clusterpass }}"
+     https: "{{ https_option }}"
+     validate_certs: "{{ validate_certs_option }}"
+  vars_files:
+  - variables.yml
+  tasks:
+  - debug:
+        msg: 'Logging into {{ sourcecluster }} as {{ clusteruser }}'
+  - name: Create DP Volume 1
+    na_ontap_volume:
+      state: present
+      name: "{{ lsvol1name }}"
+      vserver: "{{ vservername }}"
+      aggregate_name: "{{ aggr1 }}"
+      size: "{{ lsvol1size }}"
+      size_unit: gb
+      type: DP
+      policy: default
+      percent_snapshot_space: 0
+      space_guarantee: none
+      <<: *login
+  - debug: msg="Volume {{ lsvol1name }} has been created."
+  - name: Create DP Volume 2
+    na_ontap_volume:
+      state: present
+      name: "{{ lsvol2name }}"
+      vserver: "{{ vservername }}"
+      aggregate_name: "{{ aggr2 }}"
+      size: "{{ lsvol2size }}"
+      size_unit: gb
+      type: DP
+      policy: default
+      percent_snapshot_space: 0
+      space_guarantee: none
+      <<: *login
+  - debug: msg="Volume {{ lsvol2name }} has been created."
+  - name: sleep for 20 seconds to allow for Volume 1 Snapmirror Initialization
+    wait_for:
+      timeout: 20
+  - name: Initialize Snapmirror for Volume 2 # This is due to na_ontap_snapmirror not initializing second LS Mirror
+    na_ontap_command:
+      command: ['snapmirror', 'initialize', '-source-path', "{{ sourcecluster + '://' + vservername + '/' + lsvolsrc }}", '-destination-path', "{{ sourcecluster + '://' + vservername + '/' + lsvol2name }}"]
+      privilege: admin
+      <<: *login
+  - debug: msg="Second LS Mirror initialized."
