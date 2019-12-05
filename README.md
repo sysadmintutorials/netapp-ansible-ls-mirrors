@@ -16,7 +16,7 @@ Main variables used to create Root LS-Mirrors. Change these to suit your environ
 
 This playbook is responsible for:
 - creating two DP volumes which will be used for the root LS-Mirror<br>
-- 2 x LS-Mirror relationships. During the creation, LS-Mirror 1 will initialize automatically.
+- creating 2 x LS-Mirror relationships. During the creation, LS-Mirror 1 will initialize automatically.
 
 I then allow a 20 sec pause to finish the first initialization. After 20 seconds is up, the second LS-Mirror will initialize.<br>
   
